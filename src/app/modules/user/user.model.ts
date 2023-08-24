@@ -1,0 +1,1 @@
+// according to interface mongoose model goes here
