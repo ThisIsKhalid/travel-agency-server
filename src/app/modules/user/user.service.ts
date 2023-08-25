@@ -1,25 +1,49 @@
-// db
-import { UserType } from './user.interface';
-import { UserModel } from './user.model';
+import bcrypt from 'bcrypt';
+import httpStatus from 'http-status';
+import ApiError from '../../../errors/apiError';
+import { ILoginUser, UserType } from './user.interface';
+import { User } from './user.model';
 
-// api/v1/users/login
-const validateUser = async (email: string) => {
-  const result = await UserModel.findOne({ email });
-  return result;
+const userLogin = async (userData: ILoginUser): Promise<UserType> => {
+  const { email, password } = userData;
+
+  const isUserExist = await User.findOne(
+    { email },
+    { email: 1, password: 1, name: 1, image: 1 },
+  );
+  if (!isUserExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
+  }
+
+  if (isUserExist.password && password) {
+    const isPasswordMatched = await bcrypt.compare(
+      password,
+      isUserExist.password,
+    );
+
+    if (!isPasswordMatched) {
+      throw new ApiError(httpStatus.UNAUTHORIZED, 'Password does not match');
+    }
+  }
+  return isUserExist;
 };
 
-//api/v1/users/register
-const createUser = async (user: UserType) => {
-  const result = await UserModel.create(user);
-  return result;
+const createUser = async (userData: UserType): Promise<Partial<UserType>> => {
+  const result = await User.create(userData);
+
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const { name, email, image, mobile } = result;
+
+  const data = {
+    name,
+    email,
+    image,
+    mobile,
+  };
+  return data;
 };
-const checkUser = async (email: string) => {
-  const result = await UserModel.findOne({ email });
-  return result;
-}
 
 export const UserService = {
-  validateUser,
+  userLogin,
   createUser,
-  checkUser
 };
