@@ -8,12 +8,13 @@ export type UserType = {
   email: string;
   password: string;
   mobile: string;
-  image?: string | undefined;
+  image: string;
 };
 
 export type ILoginUser = {
   email: string;
   password: string;
+  userType: 'user' | 'agency';
 };
 
 export type UserModel = Model<UserType, Record<string, unknown>>;

@@ -1,31 +1,58 @@
 import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/apiError';
+import { IAgency } from '../agency/agency.interface';
+import { Agency } from '../agency/agency.model';
 import { ILoginUser, UserType } from './user.interface';
 import { User } from './user.model';
 
-const userLogin = async (userData: ILoginUser): Promise<UserType> => {
-  const { email, password } = userData;
+const userLogin = async (
+  userData: ILoginUser,
+): Promise<UserType | IAgency | undefined> => {
+  const { email, password, userType } = userData;
 
-  const isUserExist = await User.findOne(
-    { email },
-    { email: 1, password: 1, name: 1, image: 1 },
-  );
-  if (!isUserExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
-  }
+  if (userType === 'user') {
+    const isUserExist = await User.findOne(
+      { email }
+    );
+    if (!isUserExist) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
+    }
 
-  if (isUserExist.password && password) {
-    const isPasswordMatched = await bcrypt.compare(
-      password,
-      isUserExist.password,
+    if (isUserExist.password && password) {
+      const isPasswordMatched = await bcrypt.compare(
+        password,
+        isUserExist.password,
+      );
+
+      if (!isPasswordMatched) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Password does not match');
+      }
+    }
+
+    return isUserExist;
+  } else if (userType === 'agency') {
+    const isAgencyExist = await Agency.findOne(
+      { email }
     );
 
-    if (!isPasswordMatched) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'Password does not match');
+    if (!isAgencyExist) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
     }
+
+    if (isAgencyExist.password && password) {
+      const isPasswordMatched = await bcrypt.compare(
+        password,
+        isAgencyExist.password,
+      );
+
+      if (!isPasswordMatched) {
+        throw new ApiError(httpStatus.UNAUTHORIZED, 'Password does not match');
+      }
+    }
+
+    return isAgencyExist;
   }
-  return isUserExist;
 };
 
 const createUser = async (userData: UserType): Promise<Partial<UserType>> => {
