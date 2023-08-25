@@ -1,7 +1,10 @@
 // interface goes here
+// type
 
-export type IUser = {
+export type UserType = {
   name: string;
   email: string;
+  password: string;
+  mobile: string;
   image?: string;
 };
