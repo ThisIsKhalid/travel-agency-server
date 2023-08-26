@@ -2,6 +2,7 @@ import { Request, RequestHandler, Response } from "express";
 import catchAsync from "../../../shared/catchAsync";
 import sendResponse from "../../../shared/sendResponse";
 import httpStatus from "http-status";
+import { PackageService } from "./package.service";
 
 
 const createPackage: RequestHandler = catchAsync(
@@ -21,9 +22,10 @@ const createPackage: RequestHandler = catchAsync(
 
 const getAllPackages: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
-
-    const result = await PackageService.getAllPackages();
-
+    const page:number = Number(req.query.page) || 1;
+    const limit:number = Number(req.query.limit) || 20;
+    const result = await PackageService.getAllPackages(page, limit);
+    // const result = req.query;
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
