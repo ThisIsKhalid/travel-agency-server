@@ -27,6 +27,7 @@ const packageSchema = new Schema<IPackage, PackageModel>(
     price: {
       type: Number,
       required: true,
+      min: [0, 'Price must be greater than 0.']
     },
     description: {
       type: String,
