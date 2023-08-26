@@ -23,7 +23,7 @@ const createPackage: RequestHandler = catchAsync(
 const getAllPackages: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const page:number = Number(req.query.page) || 1;
-    const limit:number = Number(req.query.limit) || 20;
+    const limit:number = Number(req.query.limit) || 10;
     const result = await PackageService.getAllPackages(page, limit);
     // const result = req.query;
     sendResponse(res, {

@@ -12,4 +12,16 @@ router.post(
   AgencyController.createAgency,
 );
 
+// api/v1/agencies/all
+router.get(
+  '/all',
+  AgencyController.getAllAgencies,
+)
+
+// api/v1/agencies/id
+router.get(
+  '/:id',
+  AgencyController.getSingleAgency,
+)
+
 export const AgencyRoutes = router;

@@ -56,7 +56,19 @@ const createAgency = async (userData: IAgency): Promise<Partial<IAgency>> => {
   return data;
 };
 
+const getAllAgencies = async (page: number, limit: number): Promise<IAgency[]> => {
+  const result = await Agency.find().limit(limit).skip((page - 1) * limit);
+  return result;
+}
+
+const getSingleAgency = async (id: string) => {
+  const result = await Agency.findById(id);
+  return result;
+}
+
 export const AgencyService = {
   agencyLogin,
   createAgency,
+  getAllAgencies,
+  getSingleAgency
 };
