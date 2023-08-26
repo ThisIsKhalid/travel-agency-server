@@ -1,4 +1,4 @@
-import { Schema } from 'mongoose';
+import { Model, Schema } from 'mongoose';
 
 export type IPackage = {
   name: string;
@@ -13,3 +13,5 @@ export type IPackage = {
   image: string;
   agencyId: Schema.Types.ObjectId;
 };
+
+export type PackageModel = Model<IPackage, Record<string, unknown>>;
