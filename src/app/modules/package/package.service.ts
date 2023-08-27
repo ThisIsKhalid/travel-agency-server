@@ -4,19 +4,20 @@ import { IPackage } from './package.interface';
 import { Package } from './package.model';
 
 const createPackage = async (packageData: IPackage) => {
-  const result = await Package.create(packageData);
+  const result = (await Package.create(packageData)).populate('agencyId');
   return result;
 };
 
 const getAllPackages = async (page: number, limit: number) => {
   const result = await Package.find()
+    .populate('agencyId')
     .limit(limit)
     .skip((page - 1) * limit);
   return result;
 };
 
 const getSinglePackage = async (id: string) => {
-  const result = await Package.findById(id);
+  const result = await Package.findById(id).populate('agencyId');
   return result;
 };
 
@@ -29,7 +30,6 @@ const updatePackage = async (
   id: string,
   payload: Partial<IPackage>,
 ): Promise<IPackage | null> => {
-    
   const isExist = await Package.findOne({ _id: id });
   if (!isExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Package does not exist');
@@ -46,5 +46,5 @@ export const PackageService = {
   getAllPackages,
   getSinglePackage,
   deletePackage,
-  updatePackage
+  updatePackage,
 };

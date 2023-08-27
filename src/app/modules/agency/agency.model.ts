@@ -47,6 +47,10 @@ const agencySchema = new Schema<IAgency, AgencyModel>(
       required: true,
     },
     employees: [employeesSchema],
+    description: {
+      type: String,
+      required: true,
+    },
   },
   {
     timestamps: true,

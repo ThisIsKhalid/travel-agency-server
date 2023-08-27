@@ -1,4 +1,5 @@
-import { Model, Schema } from 'mongoose';
+import { Model, Types } from 'mongoose';
+import { IAgency } from '../agency/agency.interface';
 
 export type IPackage = {
   name: string;
@@ -11,7 +12,7 @@ export type IPackage = {
   guideName: string;
   transportOptions: 'bus' | 'train' | 'flight';
   image: string;
-  agencyId: Schema.Types.ObjectId;
+  agencyId: Types.ObjectId | IAgency;
 };
 
 export type PackageModel = Model<IPackage, Record<string, unknown>>;

@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose';
+import { Schema, Types, model } from 'mongoose';
 import { IPackage, PackageModel } from './package.interface';
 
 const packageSchema = new Schema<IPackage, PackageModel>(
@@ -6,6 +6,7 @@ const packageSchema = new Schema<IPackage, PackageModel>(
     name: {
       type: String,
       required: true,
+      unique: true
     },
     location: {
       type: String,
@@ -47,7 +48,8 @@ const packageSchema = new Schema<IPackage, PackageModel>(
       required: true,
     },
     agencyId: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
+      ref: 'Agency',
       required: true,
     },
   },
