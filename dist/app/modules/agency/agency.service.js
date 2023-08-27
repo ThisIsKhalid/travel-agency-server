@@ -47,7 +47,17 @@ const createAgency = (userData) => __awaiter(void 0, void 0, void 0, function* (
     };
     return data;
 });
+const getAllAgencies = (page, limit) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield agency_model_1.Agency.find().limit(limit).skip((page - 1) * limit);
+    return result;
+});
+const getSingleAgency = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield agency_model_1.Agency.findById(id);
+    return result;
+});
 exports.AgencyService = {
     agencyLogin,
     createAgency,
+    getAllAgencies,
+    getSingleAgency
 };

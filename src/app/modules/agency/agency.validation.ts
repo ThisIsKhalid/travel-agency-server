@@ -14,14 +14,30 @@ const createAgencyZodSchema = z.object({
     mobile: z.string({
       required_error: 'Mobile is required.',
     }),
-    image: z.string().optional(),
+    image: z.string({
+      required_error: 'Image is required',
+    }),
     address: z.string({
       required_error: 'Address is required.',
     }),
     license: z.string({
       required_error: 'License is required.',
     }),
-    employees: z.string().optional(),
+    employees: z
+      .array(
+        z.object({
+          name: z.string({
+            required_error: 'Employee name is required.',
+          }),
+          phoneNumber: z.string({
+            required_error: 'Employee phone number is required.',
+          }),
+          designation: z.string({
+            required_error: 'Employee designation is required.',
+          }),
+        }),
+      )
+      .optional(),
     description: z.string({
       required_error: 'Description is required.',
     }),
