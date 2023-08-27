@@ -12,9 +12,9 @@ router.post(
   AgencyController.createAgency,
 );
 
-// api/v1/agencies/all
+// api/v1/agencies
 router.get(
-  '/all',
+  '/',
   AgencyController.getAllAgencies,
 )
 

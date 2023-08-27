@@ -65,6 +65,22 @@ const deletePackage: RequestHandler = catchAsync(
   },
 );
 
+const updatePackage: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const data = req.body
+
+    const result = await PackageService.updatePackage(id, data);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Package updated successfully!',
+      data: result,
+    });
+  },
+);
+
 
 
 
@@ -72,5 +88,6 @@ export const PackageController = {
   createPackage,
   getAllPackages,
   getSinglePackage,
-  deletePackage
+  deletePackage,
+  updatePackage
 };

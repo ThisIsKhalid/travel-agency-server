@@ -16,6 +16,8 @@ router.post('/create-package', (0, validateRequest_1.default)(package_validation
 router.get('/:id', package_controller_1.PackageController.getSinglePackage);
 //api/v1/packages/id
 router.delete('/:id', package_controller_1.PackageController.deletePackage);
+//api/v1/packages/id
+router.patch('/:id', package_controller_1.PackageController.updatePackage);
 //api/v1/packages?page=1&limit=20
 router.get('/', package_controller_1.PackageController.getAllPackages);
 exports.PackageRoutes = router;

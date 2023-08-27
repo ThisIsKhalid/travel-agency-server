@@ -19,6 +19,9 @@ router.get('/:id', PackageController.getSinglePackage);
 //api/v1/packages/id
 router.delete('/:id', PackageController.deletePackage);
 
+//api/v1/packages/id
+router.patch('/:id', PackageController.updatePackage);
+
 //api/v1/packages?page=1&limit=20
 router.get('/', PackageController.getAllPackages);
 

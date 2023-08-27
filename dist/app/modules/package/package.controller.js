@@ -59,9 +59,21 @@ const deletePackage = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         data: result,
     });
 }));
+const updatePackage = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const data = req.body;
+    const result = yield package_service_1.PackageService.updatePackage(id, data);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Package updated successfully!',
+        data: result,
+    });
+}));
 exports.PackageController = {
     createPackage,
     getAllPackages,
     getSinglePackage,
-    deletePackage
+    deletePackage,
+    updatePackage
 };
