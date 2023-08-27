@@ -3,7 +3,7 @@
 
 import { Model } from 'mongoose';
 
-export type UserType = {
+export type IUser = {
   name: string;
   email: string;
   password: string;
@@ -14,7 +14,7 @@ export type UserType = {
 export type ILoginUser = {
   email: string;
   password: string;
-  userType: 'user' | 'agency';
+  IUser: 'user' | 'agency';
 };
 
-export type UserModel = Model<UserType, Record<string, unknown>>;
+export type UserModel = Model<IUser, Record<string, unknown>>;

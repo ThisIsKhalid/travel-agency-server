@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 // according to interface mongoose model goes here
 //schema
-const mongoose_1 = require("mongoose");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const mongoose_1 = require("mongoose");
 const config_1 = __importDefault(require("../../../config"));
 const userSchema = new mongoose_1.Schema({
     name: {

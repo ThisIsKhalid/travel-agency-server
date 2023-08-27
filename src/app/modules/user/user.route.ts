@@ -12,11 +12,18 @@ router.post(
   UserController.loginUser,
 );
 
-
 router.post(
   '/register',
   validateRequest(UserValidation.createUserZodSchema),
   UserController.createUser,
 );
+
+router.get('/:id', UserController.getSingleUser);
+
+router.delete('/:id', UserController.deleteUser);
+
+router.patch('/:id', UserController.updateUser);
+
+router.get('/', UserController.getAllUsers);
 
 export const UserRoutes = router;

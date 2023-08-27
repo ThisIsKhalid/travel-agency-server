@@ -49,8 +49,41 @@ const getSingleAgency: RequestHandler = catchAsync(
   }
 )
 
+const deleteAgency: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+
+    const result = await AgencyService.deleteAgency(id);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Agency deleted successfully!',
+      data: result,
+    });
+  },
+);
+
+const updateAgency: RequestHandler = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const data = req.body;
+
+    const result = await AgencyService.updateAgency(id, data);
+
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Agency updated successfully!',
+      data: result,
+    });
+  },
+);
+
 export const AgencyController = {
   createAgency,
   getAllAgencies,
-  getSingleAgency
+  getSingleAgency,
+  updateAgency,
+  deleteAgency
 };

@@ -1,32 +1,7 @@
-import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import ApiError from '../../../errors/apiError';
 import { IAgency } from './agency.interface';
 import { Agency } from './agency.model';
-import { ILoginUser } from '../user/user.interface';
-
-const agencyLogin = async (userData: ILoginUser): Promise<IAgency> => {
-  const { email, password } = userData;
-
-  const isUserExist = await Agency.findOne(
-    { email: email }
-  );
-  if (!isUserExist) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist');
-  }
-
-  if (isUserExist && isUserExist.password) {
-    const isPasswordMatched = await bcrypt.compare(
-      password,
-      isUserExist.password,
-    );
-
-    if (!isPasswordMatched) {
-      throw new ApiError(httpStatus.UNAUTHORIZED, 'Password does not match');
-    }
-  }
-  return isUserExist;
-};
 
 const createAgency = async (userData: IAgency): Promise<Partial<IAgency>> => {
   const result = await Agency.create(userData);
@@ -56,19 +31,45 @@ const createAgency = async (userData: IAgency): Promise<Partial<IAgency>> => {
   return data;
 };
 
-const getAllAgencies = async (page: number, limit: number): Promise<IAgency[]> => {
-  const result = await Agency.find().limit(limit).skip((page - 1) * limit);
+const getAllAgencies = async (
+  page: number,
+  limit: number,
+): Promise<IAgency[]> => {
+  const result = await Agency.find()
+    .limit(limit)
+    .skip((page - 1) * limit);
   return result;
-}
+};
 
 const getSingleAgency = async (id: string) => {
   const result = await Agency.findById(id);
   return result;
-}
+};
+
+const deleteAgency = async (id: string) => {
+  const result = await Agency.findByIdAndDelete(id);
+  return result;
+};
+
+const updateAgency = async (
+  id: string,
+  payload: Partial<IAgency>,
+): Promise<IAgency | null> => {
+  const isExist = await Agency.findOne({ _id: id });
+  if (!isExist) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Agency does not exist');
+  }
+
+  const result = await Agency.findOneAndUpdate({ _id: id }, payload, {
+    new: true,
+  });
+  return result;
+};
 
 export const AgencyService = {
-  agencyLogin,
   createAgency,
   getAllAgencies,
-  getSingleAgency
+  getSingleAgency,
+  deleteAgency,
+  updateAgency
 };

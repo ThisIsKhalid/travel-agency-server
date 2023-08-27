@@ -1,11 +1,11 @@
 // according to interface mongoose model goes here
 //schema
-import { Schema, model } from 'mongoose';
-import { UserModel, UserType } from './user.interface';
 import bcrypt from 'bcrypt';
+import { Schema, model } from 'mongoose';
 import config from '../../../config';
+import { IUser, UserModel } from './user.interface';
 
-const userSchema = new Schema<UserType, UserModel>(
+const userSchema = new Schema<IUser, UserModel>(
   {
     name: {
       type: String,
@@ -37,7 +37,6 @@ const userSchema = new Schema<UserType, UserModel>(
   },
 );
 
-
 userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(
     this.password,
@@ -48,4 +47,4 @@ userSchema.pre('save', async function (next) {
 });
 
 // 3. Create a Model.
-export const User = model<UserType, UserModel>('User', userSchema);
+export const User = model<IUser, UserModel>('User', userSchema);

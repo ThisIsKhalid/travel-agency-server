@@ -48,8 +48,31 @@ const getSingleAgency = (0, catchAsync_1.default)((req, res) => __awaiter(void 0
         data: result,
     });
 }));
+const deleteAgency = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const result = yield agency_service_1.AgencyService.deleteAgency(id);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Agency deleted successfully!',
+        data: result,
+    });
+}));
+const updateAgency = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const id = req.params.id;
+    const data = req.body;
+    const result = yield agency_service_1.AgencyService.updateAgency(id, data);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Agency updated successfully!',
+        data: result,
+    });
+}));
 exports.AgencyController = {
     createAgency,
     getAllAgencies,
-    getSingleAgency
+    getSingleAgency,
+    updateAgency,
+    deleteAgency
 };

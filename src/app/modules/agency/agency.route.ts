@@ -12,16 +12,12 @@ router.post(
   AgencyController.createAgency,
 );
 
-// api/v1/agencies
-router.get(
-  '/',
-  AgencyController.getAllAgencies,
-)
+router.get('/:id', AgencyController.getSingleAgency);
 
-// api/v1/agencies/id
-router.get(
-  '/:id',
-  AgencyController.getSingleAgency,
-)
+router.delete('/:id', AgencyController.deleteAgency);
+
+router.patch('/:id', AgencyController.updateAgency);
+
+router.get('/', AgencyController.getAllAgencies);
 
 export const AgencyRoutes = router;

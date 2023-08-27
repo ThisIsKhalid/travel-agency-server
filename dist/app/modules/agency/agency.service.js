@@ -13,24 +13,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AgencyService = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt"));
 const http_status_1 = __importDefault(require("http-status"));
 const apiError_1 = __importDefault(require("../../../errors/apiError"));
 const agency_model_1 = require("./agency.model");
-const agencyLogin = (userData) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password } = userData;
-    const isUserExist = yield agency_model_1.Agency.findOne({ email: email });
-    if (!isUserExist) {
-        throw new apiError_1.default(http_status_1.default.NOT_FOUND, 'User does not exist');
-    }
-    if (isUserExist && isUserExist.password) {
-        const isPasswordMatched = yield bcrypt_1.default.compare(password, isUserExist.password);
-        if (!isPasswordMatched) {
-            throw new apiError_1.default(http_status_1.default.UNAUTHORIZED, 'Password does not match');
-        }
-    }
-    return isUserExist;
-});
 const createAgency = (userData) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield agency_model_1.Agency.create(userData);
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
@@ -48,16 +33,33 @@ const createAgency = (userData) => __awaiter(void 0, void 0, void 0, function* (
     return data;
 });
 const getAllAgencies = (page, limit) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield agency_model_1.Agency.find().limit(limit).skip((page - 1) * limit);
+    const result = yield agency_model_1.Agency.find()
+        .limit(limit)
+        .skip((page - 1) * limit);
     return result;
 });
 const getSingleAgency = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield agency_model_1.Agency.findById(id);
     return result;
 });
+const deleteAgency = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield agency_model_1.Agency.findByIdAndDelete(id);
+    return result;
+});
+const updateAgency = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const isExist = yield agency_model_1.Agency.findOne({ _id: id });
+    if (!isExist) {
+        throw new apiError_1.default(http_status_1.default.NOT_FOUND, 'Agency does not exist');
+    }
+    const result = yield agency_model_1.Agency.findOneAndUpdate({ _id: id }, payload, {
+        new: true,
+    });
+    return result;
+});
 exports.AgencyService = {
-    agencyLogin,
     createAgency,
     getAllAgencies,
-    getSingleAgency
+    getSingleAgency,
+    deleteAgency,
+    updateAgency
 };

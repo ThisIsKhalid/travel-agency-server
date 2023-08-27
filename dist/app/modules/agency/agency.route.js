@@ -11,8 +11,8 @@ const agency_controller_1 = require("./agency.controller");
 const agency_validation_1 = require("./agency.validation");
 const router = express_1.default.Router();
 router.post('/register', (0, validateRequest_1.default)(agency_validation_1.AgencyValidation.createAgencyZodSchema), agency_controller_1.AgencyController.createAgency);
-// api/v1/agencies
-router.get('/', agency_controller_1.AgencyController.getAllAgencies);
-// api/v1/agencies/id
 router.get('/:id', agency_controller_1.AgencyController.getSingleAgency);
+router.delete('/:id', agency_controller_1.AgencyController.deleteAgency);
+router.patch('/:id', agency_controller_1.AgencyController.updateAgency);
+router.get('/', agency_controller_1.AgencyController.getAllAgencies);
 exports.AgencyRoutes = router;

@@ -19,8 +19,8 @@ const apiError_1 = __importDefault(require("../../../errors/apiError"));
 const agency_model_1 = require("../agency/agency.model");
 const user_model_1 = require("./user.model");
 const userLogin = (userData) => __awaiter(void 0, void 0, void 0, function* () {
-    const { email, password, userType } = userData;
-    if (userType === 'user') {
+    const { email, password, IUser } = userData;
+    if (IUser === 'user') {
         const isUserExist = yield user_model_1.User.findOne({ email });
         if (!isUserExist) {
             throw new apiError_1.default(http_status_1.default.NOT_FOUND, 'User does not exist');
@@ -33,7 +33,7 @@ const userLogin = (userData) => __awaiter(void 0, void 0, void 0, function* () {
         }
         return isUserExist;
     }
-    else if (userType === 'agency') {
+    else if (IUser === 'agency') {
         const isAgencyExist = yield agency_model_1.Agency.findOne({ email });
         if (!isAgencyExist) {
             throw new apiError_1.default(http_status_1.default.NOT_FOUND, 'User does not exist');
@@ -59,7 +59,35 @@ const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () 
     };
     return data;
 });
+const getAllUsers = (page, limit) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.find()
+        .limit(limit)
+        .skip((page - 1) * limit);
+    return result;
+});
+const getSingleUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.findById(id);
+    return result;
+});
+const deleteUser = (id) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield user_model_1.User.findByIdAndDelete(id);
+    return result;
+});
+const updateUser = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
+    const isExist = yield user_model_1.User.findOne({ _id: id });
+    if (!isExist) {
+        throw new apiError_1.default(http_status_1.default.NOT_FOUND, 'User does not exist');
+    }
+    const result = yield user_model_1.User.findOneAndUpdate({ _id: id }, payload, {
+        new: true,
+    });
+    return result;
+});
 exports.UserService = {
     userLogin,
     createUser,
+    getAllUsers,
+    getSingleUser,
+    deleteUser,
+    updateUser
 };
