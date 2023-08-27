@@ -2,25 +2,25 @@
 
 ### User / Agency API
 - USER Register
-https://travel-agencies-server.vercel.app/api/v1/users/register
+https://travel-agencies-server-thisiskhalid.vercel.app/users/register
 - AGENCY Register
-https://travel-agencies-server.vercel.app/api/v1/agencies/register
+https://travel-agencies-server-thisiskhalid.vercel.app/agencies/register
 - USER/AGENCY Login
-https://travel-agencies-server.vercel.app/api/v1/users/login
+https://travel-agencies-server-thisiskhalid.vercel.app/users/login
 - Get All Agency
-https://travel-agencies-server.vercel.app/api/v1/agencies
+https://travel-agencies-server-thisiskhalid.vercel.app/api/v1/agencies
 - Get Single Agency
-https://travel-agencies-server.vercel.app/api/v1/agencies/:id
+https://travel-agencies-server-thisiskhalid.vercel.app/agencies/:id
 
 ### Package API
 - Create (send data in body)
-https://travel-agencies-server.vercel.app/api/v1/packages/create-package
+https://travel-agencies-server-thisiskhalid.vercel.app/packages/create-package
 - Get All
-https://travel-agencies-server.vercel.app/api/v1/packages
-https://travel-agencies-server.vercel.app/api/v1/packages?page=1&limit=20
+https://travel-agencies-server-thisiskhalid.vercel.app/packages
+https://travel-agencies-server-thisiskhalid.vercel.app/packages?page=1&limit=20
 - Get Single
-https://travel-agencies-server.vercel.app/api/v1/packages/:id
+https://travel-agencies-server-thisiskhalid.vercel.app/packages/:id
 - Delete
-https://travel-agencies-server.vercel.app/api/v1/packages/:id
+https://travel-agencies-server-thisiskhalid.vercel.app/packages/:id
 - Update (send data in body)
-https://travel-agencies-server.vercel.app/api/v1/packages/:id
+https://travel-agencies-server-thisiskhalid.vercel.app/packages/:id

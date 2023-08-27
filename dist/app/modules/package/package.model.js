@@ -6,6 +6,7 @@ const packageSchema = new mongoose_1.Schema({
     name: {
         type: String,
         required: true,
+        unique: true
     },
     location: {
         type: String,
@@ -47,7 +48,8 @@ const packageSchema = new mongoose_1.Schema({
         required: true,
     },
     agencyId: {
-        type: mongoose_1.Schema.Types.ObjectId,
+        type: mongoose_1.Types.ObjectId,
+        ref: 'Agency',
         required: true,
     },
 }, {

@@ -58,6 +58,10 @@ const agencySchema = new mongoose_1.Schema({
         required: true,
     },
     employees: [employeesSchema],
+    description: {
+        type: String,
+        required: true,
+    },
 }, {
     timestamps: true,
     toJSON: {

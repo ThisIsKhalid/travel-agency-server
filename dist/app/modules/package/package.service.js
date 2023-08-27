@@ -17,17 +17,18 @@ const http_status_1 = __importDefault(require("http-status"));
 const apiError_1 = __importDefault(require("../../../errors/apiError"));
 const package_model_1 = require("./package.model");
 const createPackage = (packageData) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield package_model_1.Package.create(packageData);
+    const result = (yield package_model_1.Package.create(packageData)).populate('agencyId');
     return result;
 });
 const getAllPackages = (page, limit) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield package_model_1.Package.find()
+        .populate('agencyId')
         .limit(limit)
         .skip((page - 1) * limit);
     return result;
 });
 const getSinglePackage = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const result = yield package_model_1.Package.findById(id);
+    const result = yield package_model_1.Package.findById(id).populate('agencyId');
     return result;
 });
 const deletePackage = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -49,5 +50,5 @@ exports.PackageService = {
     getAllPackages,
     getSinglePackage,
     deletePackage,
-    updatePackage
+    updatePackage,
 };
